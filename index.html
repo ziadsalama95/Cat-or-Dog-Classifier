@@ -20,6 +20,9 @@
         .container {
             text-align: center;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center items horizontally */
         }
         h1 {
             margin-bottom: 20px;
@@ -104,7 +107,7 @@
         
         <!-- Classify Button -->
         <button id="classifyButton" onclick="classifyImage()" disabled>Classify Image</button>
-
+        
         <!-- Classification Result -->
         <div id="result"></div>
 
