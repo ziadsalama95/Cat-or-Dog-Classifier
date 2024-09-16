@@ -170,8 +170,8 @@
                     return (prev.probability > current.probability) ? prev : current;
                 });
 
-                // Display the classification result
-                document.getElementById('result').innerHTML = `Prediction: ${maxPrediction.className}`;
+                // Display the classification result and confidence
+                document.getElementById('result').innerHTML = `Prediction: ${maxPrediction.className} <br> Confidence: ${(maxPrediction.probability * 100).toFixed(2)}%`;
             } catch (error) {
                 console.error('Error classifying the image:', error);
             }
