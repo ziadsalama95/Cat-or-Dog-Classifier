@@ -32,24 +32,24 @@
     <div id="result"></div>
 
     <!-- TensorFlow.js Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
 
     <!-- Teachable Machine Image Model Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.3/dist/teachablemachine-image.min.js"></script>
 
     <script>
-        const modelURL = 'model/model.json';
-        const metadataURL = 'model/metadata.json';
-        
+        const modelURL = 'https://teachablemachine.withgoogle.com/models/lJ3AIkOC-/model.json';
+        const metadataURL = 'https://teachablemachine.withgoogle.com/models/lJ3AIkOC-/metadata.json';
+
         let model;
-        let modelLoaded = false; // Flag to track if the model is loaded
+        let modelLoaded = false;
 
         // Load the model
         async function loadModel() {
             try {
                 model = await tmImage.load(modelURL, metadataURL);
-                modelLoaded = true; // Set flag to true once model is loaded
-                document.getElementById('classifyButton').disabled = false; // Enable the classify button
+                modelLoaded = true;
+                document.getElementById('classifyButton').disabled = false; // Enable classify button
                 console.log('Model loaded successfully');
             } catch (error) {
                 console.error('Error loading the model:', error);
