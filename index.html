@@ -31,17 +31,19 @@
     <button onclick="classifyImage()">Classify Image</button>
     <div id="result"></div>
 
+    <!-- TensorFlow.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="model_path/metadata.json"></script> <!-- Replace with actual model files -->
-    <script src="model_path/model.json"></script>
-    <script src="model_path/weights.bin"></script>
 
+    <!-- Teachable Machine Model Files -->
     <script>
+        const modelURL = 'model/model.json';
+        const metadataURL = 'model/metadata.json';
+
         let model;
 
         // Load the model
         async function loadModel() {
-            model = await tmImage.load('model_path/model.json', 'model_path/metadata.json');  // Replace with your model path
+            model = await tmImage.load(modelURL, metadataURL);
         }
         loadModel();
 
