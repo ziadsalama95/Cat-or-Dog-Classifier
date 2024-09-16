@@ -6,17 +6,18 @@
     <title>Cat or Dog Classifier</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
 </head>
 <body>
     <h1>Cat or Dog Classifier</h1>
     <div id="uploadContainer">
         <label for="imageUpload" id="uploadPlaceholder">
-            <i class="fas fa-arrow-up"></i> Upload Image
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            <i class="fas fa-arrow-up"></i>
+            <span>Upload Image</span>
+            <img id="uploadedImage" src="#" alt="Uploaded Image">
         </label>
-        <input type="file" id="imageUpload" accept="image/*" style="display: none;">
     </div>
-    <br>
-    <img id="uploadedImage" src="#" alt="Uploaded Image">
     <div id="result"></div>
 
     <!-- TensorFlow.js Library -->
