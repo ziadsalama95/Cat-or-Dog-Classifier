@@ -9,7 +9,12 @@
 </head>
 <body>
     <h1>Cat or Dog Classifier</h1>
-    <input type="file" id="imageUpload" accept="image/*">
+    <div id="uploadContainer">
+        <label for="imageUpload" id="uploadPlaceholder">
+            <i class="fas fa-arrow-up"></i> Upload Image
+        </label>
+        <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+    </div>
     <br>
     <img id="uploadedImage" src="#" alt="Uploaded Image">
     <div id="result"></div>
