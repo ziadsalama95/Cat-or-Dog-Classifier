@@ -26,13 +26,7 @@ document.getElementById('imageUpload').addEventListener('change', async function
         
         if (modelLoaded) {
             try {
-                const prediction = await model.predict(img);
-                // Get the class with the highest confidence
-                const maxPrediction = prediction.reduce((prev, current) => {
-                    return (prev.probability > current.probability) ? prev : current;
-                });
-                // Display the classification result
-                document.getElementById('result').innerHTML = `Prediction: ${maxPrediction.className}`;
+                await classifyImage(img);
             } catch (error) {
                 console.error('Error classifying the image:', error);
             }
@@ -42,3 +36,20 @@ document.getElementById('imageUpload').addEventListener('change', async function
     };
     reader.readAsDataURL(event.target.files[0]);
 });
+
+// Classify the uploaded image
+async function classifyImage(imgElement) {
+    try {
+        const prediction = await model.predict(imgElement);
+
+        // Get the class with the highest confidence
+        const maxPrediction = prediction.reduce((prev, current) => {
+            return (prev.probability > current.probability) ? prev : current;
+        });
+
+        // Display the classification result
+        document.getElementById('result').innerHTML = `Prediction: ${maxPrediction.className}`;
+    } catch (error) {
+        console.error('Error classifying the image:', error);
+    }
+}
