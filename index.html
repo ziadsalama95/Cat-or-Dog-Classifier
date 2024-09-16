@@ -55,24 +55,11 @@
             font-weight: bold;
             margin-top: 20px;
             color: #333;
-        }
-        #classifyButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        #classifyButton:hover {
-            background-color: #0056b3;
-        }
-        #classifyButton:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block;
         }
         input[type="file"] {
             display: none;
@@ -97,9 +84,6 @@
         </div>
         <input type="file" id="imageUpload" accept="image/*" onchange="loadImage(event)">
         
-        <!-- Classify Button -->
-        <button id="classifyButton" onclick="classifyImage()" disabled>Classify Image</button>
-
         <!-- Classification Result -->
         <div id="result"></div>
 
@@ -125,7 +109,6 @@
             try {
                 model = await tmImage.load(modelURL, metadataURL);
                 modelLoaded = true;
-                document.getElementById('classifyButton').disabled = false; // Enable classify button
                 console.log('Model loaded successfully');
             } catch (error) {
                 console.error('Error loading the model:', error);
@@ -144,6 +127,9 @@
 
                 // Update background gradient based on uploaded image
                 updateBackground(reader.result);
+
+                // Run classification
+                classifyImage();
             };
             reader.readAsDataURL(event.target.files[0]);
         }
