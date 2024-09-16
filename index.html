@@ -4,20 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat or Dog Classifier</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #imageContainer {
+            display: inline-block;
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/File_Upload_Icon.svg/240px-File_Upload_Icon.svg.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 80px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        #uploadedImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        #classifyButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #classifyButton:disabled {
+            background-color: #cccccc;
+        }
+        input[type="file"] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Cat or Dog Classifier</h1>
-    <div id="uploadContainer">
-        <label for="imageUpload" id="uploadPlaceholder">
-            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
-            <i class="fas fa-arrow-up"></i>
-            <span>Upload Image</span>
-            <img id="uploadedImage" src="#" alt="Uploaded Image">
-        </label>
+
+    <!-- Image Upload Container -->
+    <div id="imageContainer" onclick="document.getElementById('imageUpload').click()">
+        <img id="uploadedImage" src="#" alt="Uploaded Image">
     </div>
+    <input type="file" id="imageUpload" accept="image/*" onchange="loadImage(event)">
+    
+    <!-- Classify Button -->
+    <button id="classifyButton" onclick="classifyImage()" disabled>Classify Image</button>
+
+    <!-- Classification Result -->
     <div id="result"></div>
 
     <!-- TensorFlow.js Library -->
@@ -26,7 +75,59 @@
     <!-- Teachable Machine Image Model Library -->
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.3/dist/teachablemachine-image.min.js"></script>
 
-    <!-- JavaScript File -->
-    <script src="script.js"></script>
+    <script>
+        const modelURL = 'https://teachablemachine.withgoogle.com/models/lJ3AIkOC-/model.json';
+        const metadataURL = 'https://teachablemachine.withgoogle.com/models/lJ3AIkOC-/metadata.json';
+
+        let model;
+        let modelLoaded = false;
+
+        // Load the model
+        async function loadModel() {
+            try {
+                model = await tmImage.load(modelURL, metadataURL);
+                modelLoaded = true;
+                document.getElementById('classifyButton').disabled = false; // Enable classify button
+                console.log('Model loaded successfully');
+            } catch (error) {
+                console.error('Error loading the model:', error);
+            }
+        }
+        loadModel();
+
+        // Load and display the uploaded image
+        function loadImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const img = document.getElementById('uploadedImage');
+                img.src = reader.result;
+                img.style.display = 'block';
+                document.getElementById('imageContainer').style.backgroundImage = 'none'; // Remove upload icon
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // Classify the uploaded image
+        async function classifyImage() {
+            if (!modelLoaded) {
+                alert("Model is still loading. Please wait...");
+                return;
+            }
+            try {
+                const imgElement = document.getElementById('uploadedImage');
+                const prediction = await model.predict(imgElement);
+
+                // Get the class with the highest confidence
+                const maxPrediction = prediction.reduce((prev, current) => {
+                    return (prev.probability > current.probability) ? prev : current;
+                });
+
+                // Display the classification result
+                document.getElementById('result').innerHTML = `Prediction: ${maxPrediction.className}`;
+            } catch (error) {
+                console.error('Error classifying the image:', error);
+            }
+        }
+    </script>
 </body>
 </html>
