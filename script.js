@@ -4,6 +4,7 @@ let labels;
 // Function to load the TFLite model
 async function loadModel() {
   try {
+    console.log("Attempting to load model...");
     model = await tflite.loadTFLiteModel('model/model_unquant.tflite');
     console.log("Model loaded successfully:", model);
   } catch (error) {
