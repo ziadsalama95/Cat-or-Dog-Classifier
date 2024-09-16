@@ -28,7 +28,7 @@
     <br>
     <img id="uploadedImage" src="#" alt="Uploaded Image" style="display:none;">
     <br>
-    <button onclick="classifyImage()">Classify Image</button>
+    <button id="classifyButton" onclick="classifyImage()" disabled>Classify Image</button>
     <div id="result"></div>
 
     <!-- TensorFlow.js Library -->
@@ -38,18 +38,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image"></script>
 
     <script>
-        // Debugging to check if the library is loaded
-        console.log('Teachable Machine Image Library loaded:', typeof tmImage !== 'undefined');
-
         const modelURL = 'model/model.json';
         const metadataURL = 'model/metadata.json';
-
+        
         let model;
+        let modelLoaded = false; // Flag to track if the model is loaded
 
         // Load the model
         async function loadModel() {
             try {
                 model = await tmImage.load(modelURL, metadataURL);
+                modelLoaded = true; // Set flag to true once model is loaded
+                document.getElementById('classifyButton').disabled = false; // Enable the classify button
                 console.log('Model loaded successfully');
             } catch (error) {
                 console.error('Error loading the model:', error);
@@ -70,6 +70,10 @@
 
         // Classify the uploaded image
         async function classifyImage() {
+            if (!modelLoaded) {
+                alert("Model is still loading. Please wait...");
+                return;
+            }
             try {
                 const imgElement = document.getElementById('uploadedImage');
                 const prediction = await model.predict(imgElement);
