@@ -1,11 +1,11 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Cairo', sans-serif;
     text-align: center;
     margin-top: 50px;
 }
 
 h1 {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Cairo', sans-serif;
     margin-bottom: 20px;
 }
 
@@ -25,30 +25,40 @@ h1 {
     border: 2px solid #ccc;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 16px;
     color: #888;
     background-color: #f9f9f9;
     box-sizing: border-box;
+    position: relative;
 }
 
 #uploadPlaceholder i {
     font-size: 40px;
 }
 
-img {
+#uploadPlaceholder img {
     max-width: 100%;
-    height: auto;
-    margin: 10px 0;
-    display: none;
-    border: 2px solid #ccc;
+    max-height: 100%;
+    object-fit: cover;
     border-radius: 10px;
+    display: block;
+}
+
+#result {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
 }
 
 /* Responsive Design */
 @media (max-width: 600px) {
-    #uploadPlaceholder {
+    #uploadContainer {
         width: 150px;
         height: 150px;
+    }
+
+    #uploadPlaceholder {
+        font-size: 14px;
     }
 
     #uploadPlaceholder i {
