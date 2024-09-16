@@ -128,10 +128,8 @@
                 // Update background gradient based on uploaded image
                 updateBackground(reader.result);
 
-                // Clear previous result
-                document.getElementById('result').innerHTML = '';
-
-                // Run classification
+                // Clear previous result and run classification
+                document.getElementById('result').innerHTML = 'Loading...';
                 classifyImage();
             };
             reader.readAsDataURL(event.target.files[0]);
@@ -152,6 +150,10 @@
             }
             try {
                 const imgElement = document.getElementById('uploadedImage');
+                if (imgElement.src === "") {
+                    console.error('No image found for classification');
+                    return;
+                }
                 const prediction = await model.predict(imgElement);
 
                 // Get the class with the highest confidence
@@ -163,6 +165,7 @@
                 document.getElementById('result').innerHTML = `Prediction: ${maxPrediction.className} <br> Confidence: ${(maxPrediction.probability * 100).toFixed(2)}%`;
             } catch (error) {
                 console.error('Error classifying the image:', error);
+                document.getElementById('result').innerHTML = 'Error classifying image. Please try again.';
             }
         }
     </script>
