@@ -128,6 +128,9 @@
                 // Update background gradient based on uploaded image
                 updateBackground(reader.result);
 
+                // Clear previous result
+                document.getElementById('result').innerHTML = '';
+
                 // Run classification
                 classifyImage();
             };
