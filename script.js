@@ -22,7 +22,6 @@ document.getElementById('imageUpload').addEventListener('change', async function
     reader.onload = async function() {
         const img = document.getElementById('uploadedImage');
         img.src = reader.result;
-        img.style.display = 'block';
         
         if (modelLoaded) {
             try {
