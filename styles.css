@@ -1,0 +1,30 @@
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+}
+
+#result {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #result {
+        font-size: 16px;
+    }
+}
