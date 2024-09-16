@@ -8,14 +8,18 @@
     <style>
         body {
             font-family: 'Cairo', sans-serif;
-            text-align: center;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            position: relative;
         }
         h1 {
             margin-bottom: 20px;
@@ -23,10 +27,8 @@
             color: #333;
         }
         #imageContainer {
-            display: inline-block;
             position: relative;
-            width: 100%;
-            max-width: 300px;
+            width: 300px;
             height: 300px;
             border: 2px solid #ccc;
             border-radius: 10px;
@@ -75,10 +77,19 @@
         input[type="file"] {
             display: none;
         }
+        .blurred-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            filter: blur(10px);
+            z-index: -1;
+        }
     </style>
 </head>
 <body>
-    <div>
+    <div class="container">
         <h1>Cat or Dog Classifier</h1>
         <!-- Image Upload Container -->
         <div id="imageContainer" onclick="document.getElementById('imageUpload').click()">
@@ -91,6 +102,9 @@
 
         <!-- Classification Result -->
         <div id="result"></div>
+
+        <!-- Blurred Background -->
+        <img id="blurredBackground" class="blurred-background" src="#" alt="Background">
     </div>
 
     <!-- TensorFlow.js Library -->
@@ -122,13 +136,23 @@
         // Load and display the uploaded image
         function loadImage(event) {
             const reader = new FileReader();
-            reader.onload = function(){
+            reader.onload = function() {
                 const img = document.getElementById('uploadedImage');
                 img.src = reader.result;
                 img.style.display = 'block';
                 document.getElementById('imageContainer').style.backgroundImage = 'none'; // Remove upload icon
+
+                // Update background gradient based on uploaded image
+                updateBackground(reader.result);
             };
             reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // Update the background gradient and blurred image
+        function updateBackground(imageSrc) {
+            const blurredBackground = document.getElementById('blurredBackground');
+            blurredBackground.src = imageSrc;
+            blurredBackground.style.display = 'block';
         }
 
         // Classify the uploaded image
