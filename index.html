@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cat or Dog Classifier</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Cat or Dog Classifier</h1>
+  
+  <div class="upload-container">
+    <input type="file" id="image-upload" accept="image/*">
+    <button onclick="classifyImage()">Classify Image</button>
+  </div>
+  
+  <div id="result"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="script.js"></script>
+</body>
+</html>
